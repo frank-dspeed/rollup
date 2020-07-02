@@ -37,7 +37,7 @@ export default function transform(
 	let customTransformCache = false;
 	const useCustomTransformCache = () => (customTransformCache = true);
 	let moduleSideEffects: boolean | null = null;
-	let syntheticNamedExports: boolean | null = null;
+	let syntheticNamedExports: boolean | string | null = null;
 	let curPlugin: Plugin;
 	const curSource: string = source.code;
 
@@ -60,7 +60,7 @@ export default function transform(
 			if (typeof result.moduleSideEffects === 'boolean') {
 				moduleSideEffects = result.moduleSideEffects;
 			}
-			if (typeof result.syntheticNamedExports === 'boolean') {
+			if (result.syntheticNamedExports != null) {
 				syntheticNamedExports = result.syntheticNamedExports;
 			}
 		} else {

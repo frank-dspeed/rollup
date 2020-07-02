@@ -210,7 +210,7 @@ export class ModuleLoader {
 			if (typeof sourceDescription.moduleSideEffects === 'boolean') {
 				module.moduleSideEffects = sourceDescription.moduleSideEffects;
 			}
-			if (typeof sourceDescription.syntheticNamedExports === 'boolean') {
+			if (sourceDescription.syntheticNamedExports != null) {
 				module.syntheticNamedExports = sourceDescription.syntheticNamedExports;
 			}
 			module.setSource(
@@ -270,7 +270,7 @@ export class ModuleLoader {
 		id: string,
 		importer: string | undefined,
 		moduleSideEffects: boolean,
-		syntheticNamedExports: boolean,
+		syntheticNamedExports: boolean | string,
 		isEntry: boolean
 	): Promise<Module> {
 		const existingModule = this.modulesById.get(id);
@@ -419,7 +419,7 @@ export class ModuleLoader {
 		let id = '';
 		let external = false;
 		let moduleSideEffects = null;
-		let syntheticNamedExports = false;
+		let syntheticNamedExports: boolean | string = false;
 		if (resolveIdResult) {
 			if (typeof resolveIdResult === 'object') {
 				id = resolveIdResult.id;
@@ -429,7 +429,7 @@ export class ModuleLoader {
 				if (typeof resolveIdResult.moduleSideEffects === 'boolean') {
 					moduleSideEffects = resolveIdResult.moduleSideEffects;
 				}
-				if (typeof resolveIdResult.syntheticNamedExports === 'boolean') {
+				if (resolveIdResult.syntheticNamedExports != null) {
 					syntheticNamedExports = resolveIdResult.syntheticNamedExports;
 				}
 			} else {
