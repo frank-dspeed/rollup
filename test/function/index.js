@@ -1,7 +1,7 @@
 const path = require('path');
 const assert = require('assert');
 const rollup = require('../../dist/rollup');
-const { compareError, compareWarnings, extend, runTestSuiteWithSamples } = require('../utils.js');
+const { compareError, compareWarnings, runTestSuiteWithSamples } = require('../utils.js');
 
 function requireWithContext(code, context, module) {
 	const contextWithExports = Object.assign({}, context, { module, exports: module.exports });
@@ -58,7 +58,7 @@ runTestSuiteWithSamples('function', path.resolve(__dirname, 'samples'), (dir, co
 
 			return rollup
 				.rollup(
-					extend(
+					Object.assign(
 						{
 							input: dir + '/main.js',
 							onwarn: warning => warnings.push(warning),
@@ -76,15 +76,14 @@ runTestSuiteWithSamples('function', path.resolve(__dirname, 'samples'), (dir, co
 
 					let result;
 
-					return Promise.resolve()
-						.then(() =>
-							bundle.generate(
-								extend(
-									{
-										format: 'cjs'
-									},
-									(config.options || {}).output || {}
-								)
+					return bundle
+						.generate(
+							Object.assign(
+								{
+									exports: 'auto',
+									format: 'cjs'
+								},
+								(config.options || {}).output || {}
 							)
 						)
 						.then(({ output }) => {

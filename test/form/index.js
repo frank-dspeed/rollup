@@ -2,7 +2,7 @@ const path = require('path');
 const assert = require('assert');
 const sander = require('sander');
 const rollup = require('../../dist/rollup');
-const { extend, normaliseOutput, runTestSuiteWithSamples } = require('../utils.js');
+const { normaliseOutput, runTestSuiteWithSamples } = require('../utils.js');
 
 const FORMATS = ['amd', 'cjs', 'system', 'es', 'iife', 'umd'];
 
@@ -19,7 +19,7 @@ runTestSuiteWithSamples('form', path.resolve(__dirname, 'samples'), (dir, config
 				bundle =
 					bundle ||
 					(await rollup.rollup(
-						extend(
+						Object.assign(
 							{
 								input: dir + '/main.js',
 								onwarn: warning => {
@@ -39,8 +39,9 @@ runTestSuiteWithSamples('form', path.resolve(__dirname, 'samples'), (dir, config
 					));
 				await generateAndTestBundle(
 					bundle,
-					extend(
+					Object.assign(
 						{
+							exports: 'auto',
 							file: inputFile,
 							format: defaultFormat
 						},
@@ -88,7 +89,7 @@ async function generateAndTestBundle(bundle, outputOptions, expectedFile, { show
 			? actualMap.sourcesContent.map(normaliseOutput)
 			: null;
 	} catch (err) {
-		assert.equal(err.code, 'ENOENT');
+		assert.strictEqual(err.code, 'ENOENT');
 	}
 
 	try {
@@ -104,6 +105,6 @@ async function generateAndTestBundle(bundle, outputOptions, expectedFile, { show
 		console.log(actualCode + '\n\n\n');
 	}
 
-	assert.equal(actualCode, expectedCode);
-	assert.deepEqual(actualMap, expectedMap);
+	assert.strictEqual(actualCode, expectedCode);
+	assert.deepStrictEqual(actualMap, expectedMap);
 }
