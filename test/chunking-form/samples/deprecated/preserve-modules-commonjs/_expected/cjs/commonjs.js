@@ -2,10 +2,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var external = require('external');
+var other = require('./other.js');
+
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var external = _interopDefault(require('external'));
-var other = require('./other.js');
+external = _interopDefault(external);
 
 const { value } = other.default;
 
