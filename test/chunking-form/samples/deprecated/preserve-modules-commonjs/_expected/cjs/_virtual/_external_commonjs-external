@@ -2,10 +2,10 @@
 
 var external = require('external');
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex : { 'default': ex }; }
 
-external = _interopDefault(external);
+var external__default = _interopDefault(external);
 
 
 
-module.exports = external;
+module.exports = external__default['default'];
