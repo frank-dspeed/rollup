@@ -1,3 +1,5 @@
+import Graph from '../Graph';
+
 export const VERSION: string;
 
 export interface RollupError extends RollupLogProps {
@@ -705,6 +707,7 @@ export interface RollupBuild {
 	cache: RollupCache | undefined;
 	generate: (outputOptions: OutputOptions) => Promise<RollupOutput>;
 	getTimings?: () => SerializedTimings;
+	modify: (fn: (graph: Graph) => void) => void;
 	watchFiles: string[];
 	write: (options: OutputOptions) => Promise<RollupOutput>;
 }

@@ -65,6 +65,9 @@ export async function rollupInternal(
 
 	const result: RollupBuild = {
 		cache: useCache ? graph.getCache() : undefined,
+		modify(fn) {
+			return fn(graph);
+		},
 		async generate(rawOutputOptions: OutputOptions) {
 			return handleGenerateWrite(
 				false,
