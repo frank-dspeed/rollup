@@ -266,7 +266,7 @@ export class ModuleLoader {
 		}
 	}
 
-	private async fetchModule(
+	async fetchModule(
 		id: string,
 		importer: string | undefined,
 		moduleSideEffects: boolean | 'no-treeshake',

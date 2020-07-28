@@ -17,6 +17,7 @@ import {
 	ANONYMOUS_PLUGIN_PREFIX,
 	throwPluginError
 } from './pluginUtils';
+import { ModuleLoader } from '../ModuleLoader';
 
 function getDeprecatedContextHandler<H extends Function>(
 	handler: H,
@@ -103,6 +104,7 @@ export function getPluginContexts(
 				options
 			),
 			emitFile: fileEmitter.emitFile,
+			fetchModule: graph.moduleLoader.fetchModule,
 			error(err): never {
 				return throwPluginError(err, plugin.name);
 			},
